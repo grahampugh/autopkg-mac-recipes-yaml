@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from shareplum import Site
-from requests_ntlm2 import HttpNtlmAuth
-from autopkglib import Processor, ProcessorError  # type: ignore
+from shareplum import Site  # pylint: disable=import-error
+from requests_ntlm2 import HttpNtlmAuth  # pylint: disable=import-error
+from autopkglib import Processor, ProcessorError  # pylint: disable=import-error
 
 __all__ = ["JamfUploadSharepointStageCheck"]
 
@@ -120,7 +120,9 @@ class JamfUploadSharepointStageCheck(Processor):
 
         if sp_list.GetListItems(fields=fields, query=query):
             content_list_autostage_passed = True
-            self.output(f"Jamf Content List for Autostage passed: {content_list_autostage_passed}")
+            self.output(
+                f"Jamf Content List for Autostage passed: {content_list_autostage_passed}"
+            )
         else:
             self.output(
                 "Jamf Content List: No entry named "
@@ -263,10 +265,9 @@ class JamfUploadSharepointStageCheck(Processor):
         elif "prd" in jss_url:
             # prd
             # check if autostage and test review passed
-            if (
-                self.check_autostage_jamf_content_list(site, selfservice_policy_name, version)
-                and self.check_jamf_test_review(site, sharepoint_policy_name, jss_url)
-            ):
+            if self.check_autostage_jamf_content_list(
+                site, selfservice_policy_name, version
+            ) and self.check_jamf_test_review(site, sharepoint_policy_name, jss_url):
                 ready_to_stage = True
             # else check that test coordination is done and content list set as ready for production
             elif (
