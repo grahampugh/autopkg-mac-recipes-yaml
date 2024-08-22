@@ -1,15 +1,15 @@
 Description: Uploads the pkg to the JSS, and creates a Self-Service Policy available to members of a Testing group.
-Identifier: com.github.eth-its-recipes.jamf.PyMOL
+Identifier: com.github.eth-its-recipes.jamf.CellProfiler
 MinimumVersion: "2.3"
-ParentRecipe: com.github.grahampugh.recipes.pkg.PyMOL
+ParentRecipe: com.github.eth-its-recipes.pkg.CellProfiler
 
 Input:
-  NAME: PyMOL
+  NAME: CellProfiler
   POLICY_NAME: "%NAME% (Testing)"
   SELFSERVICE_DISPLAY_NAME: "%NAME% (Testing)"
   PKG_CATEGORY: Science & Math
   SELFSERVICE_DESCRIPTION: |
-    PyMOL is a user-sponsored molecular visualization system on an open-source foundation, maintained and distributed by Schroedinger. 
+    CellProfiler is free, open-source software for quantitative analysis of biological images. No prior experience in programming or computer vision is required
 
     Version: %version%
     Category: %PKG_CATEGORY%
@@ -24,7 +24,7 @@ Input:
   REINSTALL_BUTTON_TEXT: "Install %version%"
   POLICY_TEMPLATE: Policy-untested-selfservice.xml
   SELFSERVICE_ICON: "%NAME%.png"
-  POLICY_RUN_COMMAND: "jamf policy -event 'PyMOL License-install'"
+  POLICY_RUN_COMMAND: "echo 'Installation of %NAME% complete'"
   UPDATE_PREDICATE: "pkg_uploaded != True"
 
 Process:
@@ -35,7 +35,6 @@ Process:
       category_name: "%PKG_CATEGORY%"
 
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageUploader
-    Comment: This processor uploads the main package which is determined using the "main_pkg_path" variable that was set in the customisation pkg recipe.
     Arguments:
       pkg_category: "%PKG_CATEGORY%"
 
